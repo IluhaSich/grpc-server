@@ -1,0 +1,88 @@
+syntax = "proto3";
+
+// Опции для генерации Java-классов в указанном пакете.
+option java_multiple_files = true;
+option java_package = "com.example.grpc";
+option java_outer_classname = "UserServiceProto";
+
+// Определение сервиса для управления пользователями
+service UserService {
+  // Метод для создания нового пользователя
+  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse) {}
+
+  // Метод для получения  пользователей
+  rpc GetUsers(GetUsersRequest) returns (GetUsersResponse) {}
+
+  // Метод для получения подписок пользователя по его ID
+  rpc GetUserDelicacy(GetUserDelicacyRequest) returns (GetUserDelicacyResponse) {}
+
+  // Метод для добавления подписки(деликатеса) пользователю по ID
+  rpc AddDelicacyToUser(AddDelicacyToUserRequest) returns (AddDelicacyToUserResponse) {}
+  // Метод для удаление подписки(деликатеса) пользователя по ID
+  rpc RemoveDelicacyFromUser(RemoveDelicacyFromUserRequest) returns (RemoveDelicacyFromUserResponse) {}
+}
+
+message Delicacy {
+  string delicacy_id = 1;
+}
+
+message User {
+  string user_id = 1;
+  string name = 2;
+  repeated Delicacy delicacies = 3;
+}
+
+// Запрос на создание пользователя
+message CreateUserRequest {
+  string name = 1;
+}
+
+// Ответ после создания пользователя
+message CreateUserResponse {
+  User user = 1;
+}
+
+// Запрос на получение пользователя
+message GetUsersRequest {
+}
+
+// Ответ, содержащий список пользователей
+message GetUsersResponse {
+  repeated User user = 1;
+}
+
+// Запрос на получение деликатесов(подписок)
+message GetUserDelicacyRequest {
+  string user_id = 1;
+}
+
+// Ответ, содержащий список достижений
+message GetUserDelicacyResponse {
+  // 'repeated' означает, что это будет список
+  repeated Delicacy delicacy = 1;
+}
+
+// Запрос на добавление деликатеса(подписки)
+message AddDelicacyToUserRequest {
+  string user_id = 1;
+  string delicacy_id = 2;
+}
+
+// Ответ после добавление деликатеса(подписки)
+message AddDelicacyToUserResponse {
+  User user = 1;
+}
+
+// Запрос на удаление деликатеса(подписки)
+message RemoveDelicacyFromUserRequest {
+  string user_id = 1;
+  string delicacy_id = 2;
+}
+
+// Ответ после удаление деликатеса(подписки)
+message RemoveDelicacyFromUserResponse {
+  User user = 1;
+}
+
+
+
